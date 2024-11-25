@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace MyApp
 {
@@ -6,7 +7,8 @@ namespace MyApp
   {
     static void Main(string[] args)
     {
-      Console.WriteLine("Hello World!");
+      Version? version = Assembly.GetExecutingAssembly().GetName().Version;
+      Console.WriteLine($"Hello World! {version}");
     }
   }
 }
