@@ -18,4 +18,10 @@
     <PackageReference Include="Velopack" Version="0.0.942" />
   </ItemGroup>
 
+ <ItemGroup>
+    <Content Include="redis\node">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
