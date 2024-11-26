@@ -1,6 +1,3 @@
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using Serilog;
 
 namespace MagpyServerLinux

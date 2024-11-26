@@ -1,7 +1,5 @@
 ﻿using Serilog;
-using System;
 using System.Diagnostics;
-using System.IO;
 using static MagpyServerLinux.PathManager;
 
 namespace MagpyServerLinux

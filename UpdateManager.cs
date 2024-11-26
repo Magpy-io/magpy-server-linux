@@ -1,6 +1,4 @@
 ﻿using Serilog;
-using System;
-using System.Threading.Tasks;
 using Velopack;
 
 using static MagpyServerLinux.Utils;

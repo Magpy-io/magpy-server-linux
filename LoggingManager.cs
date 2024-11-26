@@ -1,7 +1,5 @@
 ﻿using Serilog;
 using Serilog.Extensions.Logging;
-using System;
-using System.IO;
 
 namespace MagpyServerLinux
 {

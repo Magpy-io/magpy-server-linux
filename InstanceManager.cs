@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace MagpyServerLinux
+﻿namespace MagpyServerLinux
 {
     class InstanceManager
     {
