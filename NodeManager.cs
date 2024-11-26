@@ -14,7 +14,7 @@ namespace MagpyServerLinux
         {
             get
             {
-                return RelativeExeToAbsolute(".\\redis\\node");
+                return RelativeExeToAbsolute("./redis/node");
             }
         }
 
@@ -22,7 +22,7 @@ namespace MagpyServerLinux
         {
             get
             {
-                string pathWithPotentialSpaces = RelativeExeToAbsolute(".\\bundle\\js\\bundle.js");
+                string pathWithPotentialSpaces = RelativeExeToAbsolute("./bundle/js/bundle.js");
 
                 // Escaping spaces if in path
                 return $"\"{pathWithPotentialSpaces}\"";
