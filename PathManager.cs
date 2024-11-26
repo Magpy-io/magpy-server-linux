@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace MagpyServerWindows
+namespace MagpyServerLinux
 {
     class PathManager
     {

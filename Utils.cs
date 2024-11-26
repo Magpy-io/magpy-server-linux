@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MagpyServerWindows
+namespace MagpyServerLinux
 {
     public class Utils
     {
@@ -10,7 +10,8 @@ namespace MagpyServerWindows
         {
             if (action == null)
                 return;
-            Task.Run(async () => {
+            Task.Run(async () =>
+            {
                 while (!token.IsCancellationRequested)
                 {
                     await Task.Delay(TimeSpan.FromSeconds(seconds), token);
@@ -23,7 +24,8 @@ namespace MagpyServerWindows
         {
             if (action == null)
                 return;
-            Task.Run(async () => {
+            Task.Run(async () =>
+            {
                 if (!token.IsCancellationRequested)
                 {
                     await Task.Delay(TimeSpan.FromSeconds(seconds), token);

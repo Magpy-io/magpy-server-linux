@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace MagpyServerWindows
+namespace MagpyServerLinux
 {
     /// <summary>
     /// Allows processes to be automatically killed if this parent process unexpectedly quits.

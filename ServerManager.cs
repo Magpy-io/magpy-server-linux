@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace MagpyServerWindows
+namespace MagpyServerLinux
 {
     public class ServerManager
     {

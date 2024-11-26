@@ -3,7 +3,7 @@ using Serilog.Extensions.Logging;
 using System;
 using System.IO;
 
-namespace MagpyServerWindows
+namespace MagpyServerLinux
 {
     class LoggingManager
     {

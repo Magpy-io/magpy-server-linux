@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 
-namespace MagpyServerWindows
+namespace MagpyServerLinux
 {
     public class NodeEvents
     {
         private static string FormatEventSystrayExit()
         {
-            var e = new { source = "NOTIFICAITON_ICON", name="EXIT" };
+            var e = new { source = "NOTIFICAITON_ICON", name = "EXIT" };
             return JsonConvert.SerializeObject(e);
         }
 

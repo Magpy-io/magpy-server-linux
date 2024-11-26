@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Serilog;
 
-namespace MagpyServerWindows
+namespace MagpyServerLinux
 {
     public class Program
-   {
+    {
         static void MainInner(string[] args)
         {
             LoggingManager.Init();

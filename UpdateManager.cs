@@ -3,9 +3,9 @@ using System;
 using System.Threading.Tasks;
 using Velopack;
 
-using static MagpyServerWindows.Utils;
+using static MagpyServerLinux.Utils;
 
-namespace MagpyServerWindows
+namespace MagpyServerLinux
 {
     class UpdateManager
     {
@@ -27,7 +27,8 @@ namespace MagpyServerWindows
                    PathManager.ClearAppDataFolder();
                    AutoStartupSetup.DisableAutoStartup();
                })
-               .WithFirstRun((v) => {
+               .WithFirstRun((v) =>
+               {
                    ServerManager.OpenWebInterface();
                })
            .Run(LoggingManager.SerilogToMicrosoftLogger(LoggingManager.LoggerInstaller));
@@ -82,7 +83,8 @@ namespace MagpyServerWindows
             // 12 hours
             int secondsDelay = 12 * 60 * 60;
 
-            SchedulePeriodicTask(async () => {
+            SchedulePeriodicTask(async () =>
+            {
                 try
                 {
                     await UpdateMyApp();

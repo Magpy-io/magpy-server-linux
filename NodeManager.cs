@@ -2,23 +2,26 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using static MagpyServerWindows.PathManager;
+using static MagpyServerLinux.PathManager;
 
-namespace MagpyServerWindows
+namespace MagpyServerLinux
 {
     class NodeManager
     {
         static public Process child;
 
-        public static string NodePath {
-            get {
+        public static string NodePath
+        {
+            get
+            {
                 return RelativeExeToAbsolute("..\\redis\\node.exe");
-            } 
+            }
         }
 
         public static string JsEntryFilePath
         {
-            get{
+            get
+            {
                 string pathWithPotentialSpaces = RelativeExeToAbsolute(".\\bundle\\js\\bundle.js");
 
                 // Escaping spaces if in path

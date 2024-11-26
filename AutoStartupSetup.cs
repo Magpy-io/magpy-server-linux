@@ -1,7 +1,7 @@
 ﻿using Microsoft.Win32;
 using System.Reflection;
 
-namespace MagpyServerWindows
+namespace MagpyServerLinux
 {
     public class AutoStartupSetup
     {

@@ -2,9 +2,9 @@
 using System.Windows.Forms;
 using System.Threading.Tasks;
 using Serilog;
-using static MagpyServerWindows.Constants;
+using static MagpyServerLinux.Constants;
 
-namespace MagpyServerWindows
+namespace MagpyServerLinux
 {
     public class NotificationIcon
     {
@@ -34,7 +34,7 @@ namespace MagpyServerWindows
             contextMenu = new ContextMenu();
             contextMenu.MenuItems.AddRange(
                         new MenuItem[] { menuItem1, menuItem3, menuItem2 });
-            
+
             notifyIcon = new NotifyIcon();
             notifyIcon.Icon = new System.Drawing.Icon(PathManager.RelativeExeToAbsolute(".\\appicon.ico"));
             notifyIcon.ContextMenu = contextMenu;

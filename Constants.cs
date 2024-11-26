@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace MagpyServerWindows
+namespace MagpyServerLinux
 {
     public class Constants
     {
