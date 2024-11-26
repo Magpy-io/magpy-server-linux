@@ -14,6 +14,15 @@ namespace MagpyServerLinux
         public static ILogger? LoggerInstaller { get; private set; }
         public static ILogger? LoggerNode { get; private set; }
 
+        public static void InitEarly()
+        {
+            LoggerLinuxApp = CreateConsoleLogger(LINUX_APP_LOGGING_CHANNEL);
+            LoggerInstaller = CreateConsoleLogger(INSTALLER_LOGGING_CHANNEL);
+            LoggerNode = CreateNodeConsoleLogger(NODE_LOGGING_CHANNEL);
+
+            Log.Logger = LoggerLinuxApp;
+        }
+
         public static void Init()
         {
 #if DEBUG

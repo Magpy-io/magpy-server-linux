@@ -6,10 +6,6 @@ namespace MagpyServerLinux
     {
         static async Task MainInner(string[] args)
         {
-            LoggingManager.Init();
-
-            Log.Debug("Logging initialized.");
-
             UpdateManager.Init();
 
             Log.Debug("Updating setup finished.");
@@ -43,11 +39,15 @@ namespace MagpyServerLinux
 
         static async Task Main(string[] args)
         {
+            LoggingManager.InitEarly();
             try
             {
                 bool instanceCreated = InstanceManager.HoldInstance();
                 if (instanceCreated)
                 {
+                    LoggingManager.Init();
+                    Log.Debug("Logging initialized.");
+
                     await MainInner(args);
                 }
                 else
