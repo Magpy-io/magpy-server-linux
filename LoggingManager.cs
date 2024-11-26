@@ -7,19 +7,19 @@ namespace MagpyServerLinux
 {
     class LoggingManager
     {
-        public const string WIN_APP_LOGGING_CHANNEL = "win";
+        public const string LINUX_APP_LOGGING_CHANNEL = "linux";
         public const string INSTALLER_LOGGING_CHANNEL = "installer";
         public const string NODE_LOGGING_CHANNEL = "node";
 
 
-        public static ILogger LoggerWinApp { get; private set; }
+        public static ILogger LoggerLinuxApp { get; private set; }
         public static ILogger LoggerInstaller { get; private set; }
         public static ILogger LoggerNode { get; private set; }
 
         public static void Init()
         {
 #if DEBUG
-            LoggerWinApp = CreateConsoleLogger(WIN_APP_LOGGING_CHANNEL);
+            LoggerLinuxApp = CreateConsoleLogger(LINUX_APP_LOGGING_CHANNEL);
             LoggerInstaller = CreateConsoleLogger(INSTALLER_LOGGING_CHANNEL);
             LoggerNode = CreateNodeConsoleLogger(NODE_LOGGING_CHANNEL);
 #else
@@ -28,7 +28,7 @@ namespace MagpyServerLinux
             LoggerNode = CreateNodeFileLoggerInFolder(NODE_LOGGING_CHANNEL);
 #endif
 
-            Log.Logger = LoggerWinApp;
+            Log.Logger = LoggerLinuxApp;
         }
 
         private static ILogger CreateFileLoggerInFolder(string channel)
@@ -77,7 +77,7 @@ namespace MagpyServerLinux
         public static void DisposeLoggers()
         {
             IDisposable disposable1 = (IDisposable)LoggerInstaller;
-            IDisposable disposable2 = (IDisposable)LoggerWinApp;
+            IDisposable disposable2 = (IDisposable)LoggerLinuxApp;
             IDisposable disposable3 = (IDisposable)LoggerNode;
 
             disposable1?.Dispose();
