@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Serilog;
 
 namespace MagpyServerLinux
 {
     public class Program
     {
-        static void MainInner(string[] args)
+        static async Task MainInner(string[] args)
         {
             LoggingManager.Init();
 
@@ -38,10 +37,11 @@ namespace MagpyServerLinux
 
             AppDomain.CurrentDomain.ProcessExit += Program_Exited;
 
-            Log.Debug("Setting up NotificationIcon");
-            NotificationIcon.StartNotificationIcon();
 
-            Application.Run();
+            while (true)
+            {
+                await Task.Delay(100000);
+            }
         }
 
         static async Task Main(string[] args)
@@ -51,7 +51,7 @@ namespace MagpyServerLinux
                 bool instanceCreated = InstanceManager.HoldInstance();
                 if (instanceCreated)
                 {
-                    MainInner(args);
+                    await MainInner(args);
                 }
                 else
                 {

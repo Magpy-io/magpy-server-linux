@@ -16,17 +16,6 @@ namespace MagpyServerLinux
         public static void Init()
         {
             VelopackApp.Build()
-               .WithAfterInstallFastCallback((v) =>
-               {
-                   AutoStartupSetup.EnableAutoStartup();
-               })
-               .WithBeforeUninstallFastCallback((v) =>
-               {
-                   NodeManager.KillNodeServer();
-                   LoggingManager.DisposeLoggers();
-                   PathManager.ClearAppDataFolder();
-                   AutoStartupSetup.DisableAutoStartup();
-               })
                .WithFirstRun((v) =>
                {
                    ServerManager.OpenWebInterface();

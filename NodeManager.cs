@@ -66,7 +66,6 @@ namespace MagpyServerLinux
                 }
             };
             child.Start();
-            ChildProcessTracker.AddProcess(child);
             child.EnableRaisingEvents = true;
             child.Exited += Child_Exited;
 
