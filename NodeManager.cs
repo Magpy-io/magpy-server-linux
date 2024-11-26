@@ -14,7 +14,7 @@ namespace MagpyServerLinux
         {
             get
             {
-                return RelativeExeToAbsolute("..\\redis\\node.exe");
+                return RelativeExeToAbsolute(".\\redis\\node");
             }
         }
 
@@ -31,23 +31,7 @@ namespace MagpyServerLinux
 
         public static bool VerifyNodeExe()
         {
-            Directory.CreateDirectory(RelativeExeToAbsolute("..\\redis"));
-
-            bool nodeExistsInRedis = File.Exists(RelativeExeToAbsolute("..\\redis\\node.exe"));
-            bool nodeExistsInAppFolder = File.Exists(RelativeExeToAbsolute(".\\redis\\node.exe"));
-
-            if (!nodeExistsInRedis && nodeExistsInAppFolder)
-            {
-                File.Copy(RelativeExeToAbsolute(".\\redis\\node.exe"), RelativeExeToAbsolute("..\\redis\\node.exe"));
-                nodeExistsInRedis = true;
-            }
-
-            if (nodeExistsInAppFolder)
-            {
-                File.Delete(RelativeExeToAbsolute(".\\redis\\node.exe"));
-            }
-
-            return nodeExistsInRedis;
+            return File.Exists(RelativeExeToAbsolute(NodePath));
         }
 
         public static void StartNodeServer()
