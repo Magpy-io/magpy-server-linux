@@ -8,7 +8,7 @@ namespace MagpyServerLinux
 {
     class NodeManager
     {
-        static public Process child;
+        static public Process? child;
 
         public static string NodePath
         {
@@ -78,15 +78,21 @@ namespace MagpyServerLinux
 
         private static void Child_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
-            LoggingManager.LoggerNode.Debug(e.Data);
+            if (e.Data != null)
+            {
+                LoggingManager.LoggerNode?.Debug(e.Data);
+            }
         }
 
         private static void Child_OutputErrorReceived(object sender, DataReceivedEventArgs e)
         {
-            LoggingManager.LoggerNode.Error(e.Data);
+            if (e.Data != null)
+            {
+                LoggingManager.LoggerNode?.Error(e.Data);
+            }
         }
 
-        private static void Child_Exited(object sender, EventArgs e)
+        private static void Child_Exited(object? sender, EventArgs e)
         {
             Log.Debug("Server node exited. Closing app.");
             Environment.Exit(0);

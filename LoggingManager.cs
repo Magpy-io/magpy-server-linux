@@ -12,9 +12,9 @@ namespace MagpyServerLinux
         public const string NODE_LOGGING_CHANNEL = "node";
 
 
-        public static ILogger LoggerLinuxApp { get; private set; }
-        public static ILogger LoggerInstaller { get; private set; }
-        public static ILogger LoggerNode { get; private set; }
+        public static ILogger? LoggerLinuxApp { get; private set; }
+        public static ILogger? LoggerInstaller { get; private set; }
+        public static ILogger? LoggerNode { get; private set; }
 
         public static void Init()
         {
@@ -69,16 +69,20 @@ namespace MagpyServerLinux
                 .CreateLogger();
         }
 
-        public static Microsoft.Extensions.Logging.ILogger SerilogToMicrosoftLogger(ILogger logger)
+        public static Microsoft.Extensions.Logging.ILogger? SerilogToMicrosoftLogger(ILogger? logger)
         {
+            if (logger == null)
+            {
+                return null;
+            }
             return new SerilogLoggerFactory(logger).CreateLogger("Serilog");
         }
 
         public static void DisposeLoggers()
         {
-            IDisposable disposable1 = (IDisposable)LoggerInstaller;
-            IDisposable disposable2 = (IDisposable)LoggerLinuxApp;
-            IDisposable disposable3 = (IDisposable)LoggerNode;
+            IDisposable? disposable1 = (IDisposable?)LoggerInstaller;
+            IDisposable? disposable2 = (IDisposable?)LoggerLinuxApp;
+            IDisposable? disposable3 = (IDisposable?)LoggerNode;
 
             disposable1?.Dispose();
             disposable2?.Dispose();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using Serilog;
 
 namespace MagpyServerLinux
 {
@@ -9,13 +10,20 @@ namespace MagpyServerLinux
         public const string APPDATA_MAGPY_FOLDER_NAME = "Magpy";
         public static string RelativeExeToAbsolute(string relativePath)
         {
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), relativePath);
+            string assemblyLocation = Assembly.GetExecutingAssembly().Location;
+            string? assemblyFolder = Path.GetDirectoryName(assemblyLocation);
+
+            if (assemblyFolder == null)
+            {
+                throw new Exception("Could not get assembly location folder.");
+            }
+
+            return Path.Combine(assemblyFolder, relativePath);
         }
 
         public static string RelativeAppDataToAbsolute(string relativePath)
         {
-            var a = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), APPDATA_MAGPY_FOLDER_NAME, relativePath);
-            return a;
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), APPDATA_MAGPY_FOLDER_NAME, relativePath);
         }
 
         public static void ClearAppDataFolder()

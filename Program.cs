@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Serilog;
@@ -81,7 +81,7 @@ namespace MagpyServerLinux
             }
         }
 
-        private static void Program_Exited(object sender, EventArgs e)
+        private static void Program_Exited(object? sender, EventArgs e)
         {
             Log.Debug("Program closing, Killing node server.");
             NodeManager.KillNodeServer();
