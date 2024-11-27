@@ -4,7 +4,7 @@ using Serilog;
 namespace MagpyServerLinux
 {
 
-  public class SignalWatcher
+  public class SignalManager
   {
     private const int SIGINT = 2;
     private const int SIGTERM = 15;
