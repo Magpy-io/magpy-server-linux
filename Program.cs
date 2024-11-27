@@ -38,6 +38,7 @@ namespace MagpyServerLinux
         {
             LoggingManager.InitEarly();
             AppDomain.CurrentDomain.ProcessExit += Program_Exited;
+            SignalWatcher.SetupSignalWatchers();
 
             try
             {
