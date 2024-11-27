@@ -28,9 +28,6 @@ namespace MagpyServerLinux
 
             Log.Debug("Node server started.");
 
-            AppDomain.CurrentDomain.ProcessExit += Program_Exited;
-
-
             while (true)
             {
                 await Task.Delay(100000);
@@ -40,6 +37,8 @@ namespace MagpyServerLinux
         static async Task Main(string[] args)
         {
             LoggingManager.InitEarly();
+            AppDomain.CurrentDomain.ProcessExit += Program_Exited;
+
             try
             {
                 bool instanceCreated = InstanceManager.HoldInstance();
@@ -49,11 +48,6 @@ namespace MagpyServerLinux
                     Log.Debug("Logging initialized.");
 
                     await MainInner(args);
-                }
-                else
-                {
-                    ServerManager.OpenWebInterface();
-                    Environment.Exit(0);
                 }
             }
             catch (Exception e)
@@ -82,6 +76,7 @@ namespace MagpyServerLinux
         {
             Log.Debug("Program closing, Killing node server.");
             NodeManager.KillNodeServer();
+            InstanceManager.ReleaseInstance();
         }
     }
 }
