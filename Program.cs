@@ -36,7 +36,9 @@ namespace MagpyServerLinux
 
         static async Task Main(string[] args)
         {
+#if DEBUG
             LoggingManager.InitEarly();
+#endif
             AppDomain.CurrentDomain.ProcessExit += Program_Exited;
             SignalWatcher.SetupSignalWatchers();
 
@@ -49,6 +51,10 @@ namespace MagpyServerLinux
                     Log.Debug("Logging initialized.");
 
                     await MainInner(args);
+                }
+                else
+                {
+                    Console.WriteLine("Failed to run Magpy. An instance of the app is already running.");
                 }
             }
             catch (Exception e)
