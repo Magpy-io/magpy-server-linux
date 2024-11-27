@@ -5,37 +5,37 @@ namespace MagpyServerLinux
 {
     class LoggingManager
     {
-        public const string LINUX_APP_LOGGING_CHANNEL = "linux";
+        public const string APP_LOGGING_CHANNEL = "app";
         public const string INSTALLER_LOGGING_CHANNEL = "installer";
         public const string NODE_LOGGING_CHANNEL = "node";
 
 
-        public static ILogger? LoggerLinuxApp { get; private set; }
+        public static ILogger? LoggerApp { get; private set; }
         public static ILogger? LoggerInstaller { get; private set; }
         public static ILogger? LoggerNode { get; private set; }
 
         public static void InitEarly()
         {
-            LoggerLinuxApp = CreateConsoleLogger(LINUX_APP_LOGGING_CHANNEL);
+            LoggerApp = CreateConsoleLogger(APP_LOGGING_CHANNEL);
             LoggerInstaller = CreateConsoleLogger(INSTALLER_LOGGING_CHANNEL);
             LoggerNode = CreateNodeConsoleLogger(NODE_LOGGING_CHANNEL);
 
-            Log.Logger = LoggerLinuxApp;
+            Log.Logger = LoggerApp;
         }
 
         public static void Init()
         {
 #if DEBUG
-            LoggerLinuxApp = CreateConsoleLogger(LINUX_APP_LOGGING_CHANNEL);
+            LoggerApp = CreateConsoleLogger(APP_LOGGING_CHANNEL);
             LoggerInstaller = CreateConsoleLogger(INSTALLER_LOGGING_CHANNEL);
             LoggerNode = CreateNodeConsoleLogger(NODE_LOGGING_CHANNEL);
 #else
-            LoggerWinApp = CreateFileLoggerInFolder(WIN_APP_LOGGING_CHANNEL);
+            LoggerApp = CreateFileLoggerInFolder(APP_LOGGING_CHANNEL);
             LoggerInstaller = CreateFileLoggerInFolder(INSTALLER_LOGGING_CHANNEL);
             LoggerNode = CreateNodeFileLoggerInFolder(NODE_LOGGING_CHANNEL);
 #endif
 
-            Log.Logger = LoggerLinuxApp;
+            Log.Logger = LoggerApp;
         }
 
         private static ILogger CreateFileLoggerInFolder(string channel)
@@ -88,7 +88,7 @@ namespace MagpyServerLinux
         public static void DisposeLoggers()
         {
             IDisposable? disposable1 = (IDisposable?)LoggerInstaller;
-            IDisposable? disposable2 = (IDisposable?)LoggerLinuxApp;
+            IDisposable? disposable2 = (IDisposable?)LoggerApp;
             IDisposable? disposable3 = (IDisposable?)LoggerNode;
 
             disposable1?.Dispose();
