@@ -37,6 +37,11 @@ namespace MagpyServerLinux
             if (fs != null)
             {
                 fs.Close();
+
+                if (File.Exists(LOCK_FILE_PATH))
+                {
+                    File.Delete(LOCK_FILE_PATH);
+                }
             }
         }
 
