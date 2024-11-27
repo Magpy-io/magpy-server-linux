@@ -4,7 +4,7 @@ namespace MagpyServerLinux
 {
     public class Program
     {
-        static async Task MainInner(string[] args)
+        static async Task StartApp()
         {
             UpdateManager.Init();
 
@@ -28,6 +28,10 @@ namespace MagpyServerLinux
 
             Log.Debug("Node server started.");
 
+            await Task.Delay(500);
+
+            ServerManager.OpenWebInterface();
+
             while (true)
             {
                 await Task.Delay(100000);
@@ -50,7 +54,7 @@ namespace MagpyServerLinux
                     LoggingManager.Init();
                     Log.Debug("Logging initialized.");
 
-                    await MainInner(args);
+                    await StartApp();
                 }
                 else
                 {
