@@ -6,7 +6,7 @@ namespace MagpyServerLinux
     {
         public static void OpenWebInterface()
         {
-            Process.Start(Constants.serverUrl);
+            Process.Start("xdg-open", Constants.serverUrl);
         }
     }
 }
