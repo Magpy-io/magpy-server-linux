@@ -62,7 +62,7 @@ namespace MagpyServerLinux
 
     public static void StopRunningInstance()
     {
-      if (!InstanceManager.IsInstanceHeld())
+      if (!InstanceManager.IsInstanceRunning())
       {
         return;
       }

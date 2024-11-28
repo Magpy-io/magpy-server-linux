@@ -53,7 +53,7 @@ namespace MagpyServerLinux
             }
         }
 
-        public static bool IsInstanceHeld()
+        public static bool IsInstanceRunning()
         {
             try
             {
@@ -74,7 +74,7 @@ namespace MagpyServerLinux
 
         public static int GetInstancePID()
         {
-            if (!IsInstanceHeld())
+            if (!IsInstanceRunning())
             {
                 return -1;
             }

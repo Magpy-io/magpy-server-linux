@@ -24,7 +24,7 @@ namespace MagpyServerLinux
                 switch (action)
                 {
                     case Action.LAUNCH_WEBUI:
-                        if (!InstanceManager.IsInstanceHeld())
+                        if (!InstanceManager.IsInstanceRunning())
                         {
                             Console.WriteLine("App is stopped.");
                         }
@@ -35,7 +35,7 @@ namespace MagpyServerLinux
                         }
                         return;
                     case Action.STATUS:
-                        if (InstanceManager.IsInstanceHeld())
+                        if (InstanceManager.IsInstanceRunning())
                         {
                             Console.WriteLine("App is running.");
                         }
@@ -51,6 +51,8 @@ namespace MagpyServerLinux
                     case Action.DISPLAY_VERSION:
                         Console.WriteLine(AppName + " v" + version);
                         return;
+                    case Action.UPDATE:
+
                 }
 
                 bool instanceCreated = InstanceManager.HoldInstance();
