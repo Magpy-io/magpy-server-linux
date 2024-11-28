@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Serilog;
 
@@ -14,7 +15,29 @@ namespace MagpyServerLinux
     private static extern int sigaction(int signum, ref SigAction act, IntPtr oldact);
     private delegate void SignalHandler(int signal);
 
+    [DllImport("libc")]
+    private static extern int kill(int pid, int sig);
+
+
     private static SignalHandler? _signalHandler;
+
+    public static void SendKillSignal(int pid)
+    {
+      kill(pid, SIGTERM);
+    }
+
+    public static bool IsProcessRunning(int pid)
+    {
+      try
+      {
+        Process a = Process.GetProcessById(pid);
+        return true;
+      }
+      catch (ArgumentException)
+      {
+        return false;
+      }
+    }
 
     public static void SetupSignalWatchers()
     {
