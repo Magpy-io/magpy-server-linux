@@ -20,9 +20,9 @@ namespace MagpyServerLinux
       {
         case "stop":
           return Action.STOP;
-        case "webui":
+        case "--open-webui":
           return Action.LAUNCH_WEBUI;
-        case "status":
+        case "--status":
           return Action.STATUS;
         case "--version":
           return Action.DISPLAY_VERSION;
