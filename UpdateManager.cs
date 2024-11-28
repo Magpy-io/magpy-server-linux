@@ -21,6 +21,12 @@ namespace MagpyServerLinux
            .Run(LoggingManager.SerilogToMicrosoftLogger(LoggingManager.LoggerInstaller));
         }
 
+        public static bool IsAppInstalled()
+        {
+            var mgr = new Velopack.UpdateManager(UPDATE_URL);
+
+            return mgr.IsInstalled;
+        }
         public static async Task UpdateMyAppAndExit()
         {
             if (isUpdateRunning)
