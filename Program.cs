@@ -66,8 +66,8 @@ namespace MagpyServerLinux
                         }
                         if (InstanceManager.IsInstanceRunning())
                         {
-                            Console.WriteLine("App is running. Stopping app...");
-                            App.StopRunningInstance();
+                            Console.WriteLine("App is running. Stop app before updating server.");
+                            return;
                         }
                         Console.WriteLine("Checking for updates");
                         await UpdateManager.UpdateMyAppAndExit();
@@ -76,6 +76,7 @@ namespace MagpyServerLinux
                         if (InstanceManager.IsInstanceRunning())
                         {
                             Console.WriteLine("App is running. Stop app before clearing data.");
+                            return;
                         }
                         else
                         {
