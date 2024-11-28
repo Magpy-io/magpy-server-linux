@@ -54,6 +54,7 @@ namespace MagpyServerLinux
     private static void Program_Exited(object? sender, EventArgs e)
     {
       Log.Debug("Program closing, Killing node server.");
+      Console.WriteLine("Program closing.");
       NodeManager.KillNodeServer();
       InstanceManager.ReleaseInstance();
     }
