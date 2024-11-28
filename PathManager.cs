@@ -20,7 +20,12 @@ namespace MagpyServerLinux
 
         public static string RelativeAppDataToAbsolute(string relativePath)
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), APPDATA_MAGPY_FOLDER_NAME, relativePath);
+            return Path.Combine(AppDataPath(), relativePath);
+        }
+
+        public static string AppDataPath()
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), APPDATA_MAGPY_FOLDER_NAME);
         }
 
         public static void ClearAppDataFolder()
