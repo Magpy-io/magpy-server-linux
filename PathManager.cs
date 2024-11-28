@@ -35,5 +35,15 @@ namespace MagpyServerLinux
                 Directory.Delete(AppDataPath(), recursive: true);
             }
         }
+
+        public static string? GetAppImagePath()
+        {
+            return Environment.GetEnvironmentVariable("APPIMAGE");
+        }
+
+        public static string GetDesktopFileFolderPath()
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config", "autostart");
+        }
     }
 }
