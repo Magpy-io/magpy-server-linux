@@ -29,6 +29,7 @@ namespace MagpyServerLinux
       NodeManager.StartNodeServer();
 
       Log.Debug("Node server started.");
+      Console.WriteLine("Server started.");
 
       await Task.Delay(500);
 
