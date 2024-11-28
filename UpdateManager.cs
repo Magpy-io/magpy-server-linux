@@ -7,7 +7,7 @@ namespace MagpyServerLinux
 {
     class UpdateManager
     {
-        static readonly string UPDATE_URL = "https://magpy-update-win.s3.eu-west-3.amazonaws.com";
+        static readonly string UPDATE_URL = "https://magpy-update-linux.s3.eu-west-3.amazonaws.com";
 
         static bool isUpdateRunning = false;
 
