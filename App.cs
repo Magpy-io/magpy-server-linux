@@ -34,7 +34,15 @@ namespace MagpyServerLinux
 
       if (displayUI)
       {
-        ServerManager.OpenWebInterface();
+        try
+        {
+          ServerManager.OpenWebInterface();
+        }
+        catch (Exception e)
+        {
+          Log.Debug(e, "Failed to open web interface.");
+          Console.WriteLine("Failed to open web interface");
+        }
       }
 
       while (true)
