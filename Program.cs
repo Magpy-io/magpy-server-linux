@@ -10,11 +10,12 @@ namespace MagpyServerLinux
 #if DEBUG
             LoggingManager.InitEarly();
 #endif
-            UpdateManager.Init();
-            Log.Debug("Updating setup finished.");
 
             try
             {
+                UpdateManager.Init();
+                Log.Debug("Updating setup finished.");
+
                 ArgsHandler argsHandler = new ArgsHandler(args);
 
                 Action action = argsHandler.GetAction();
