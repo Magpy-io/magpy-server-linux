@@ -30,7 +30,10 @@ namespace MagpyServerLinux
 
         public static void ClearAppDataFolder()
         {
-            Directory.Delete(RelativeAppDataToAbsolute("."), true);
+            if (Directory.Exists(AppDataPath()))
+            {
+                Directory.Delete(AppDataPath(), recursive: true);
+            }
         }
     }
 }

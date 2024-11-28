@@ -28,6 +28,8 @@ namespace MagpyServerLinux
           return Action.DISPLAY_VERSION;
         case "update":
           return Action.UPDATE;
+        case "--clear-data":
+          return Action.CLEAR_DATA;
       }
       return Action.START;
     }
@@ -56,7 +58,8 @@ namespace MagpyServerLinux
     LAUNCH_WEBUI,
     STATUS,
     DISPLAY_VERSION,
-    UPDATE
+    UPDATE,
+    CLEAR_DATA
   }
 }
 

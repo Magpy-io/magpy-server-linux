@@ -63,6 +63,18 @@ namespace MagpyServerLinux
                         Console.WriteLine("Checking for updates");
                         await UpdateManager.UpdateMyAppAndExit();
                         return;
+                    case Action.CLEAR_DATA:
+                        if (InstanceManager.IsInstanceRunning())
+                        {
+                            Console.WriteLine("App is running. Stop app before clearing data.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Clearing magpy data.");
+                            PathManager.ClearAppDataFolder();
+                            Console.WriteLine("Data cleared.");
+                        }
+                        return;
 
                 }
 
