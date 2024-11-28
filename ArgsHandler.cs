@@ -18,6 +18,8 @@ namespace MagpyServerLinux
 
       switch (args[0])
       {
+        case "--silent":
+          return Action.START;
         case "stop":
           return Action.STOP;
         case "--open-webui":
