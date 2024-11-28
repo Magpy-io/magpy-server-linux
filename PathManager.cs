@@ -20,12 +20,30 @@ namespace MagpyServerLinux
 
         public static string RelativeAppDataToAbsolute(string relativePath)
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), APPDATA_MAGPY_FOLDER_NAME, relativePath);
+            return Path.Combine(AppDataPath(), relativePath);
+        }
+
+        public static string AppDataPath()
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), APPDATA_MAGPY_FOLDER_NAME);
         }
 
         public static void ClearAppDataFolder()
         {
-            Directory.Delete(RelativeAppDataToAbsolute("."), true);
+            if (Directory.Exists(AppDataPath()))
+            {
+                Directory.Delete(AppDataPath(), recursive: true);
+            }
+        }
+
+        public static string? GetAppImagePath()
+        {
+            return Environment.GetEnvironmentVariable("APPIMAGE");
+        }
+
+        public static string GetDesktopFileFolderPath()
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config", "autostart");
         }
     }
 }

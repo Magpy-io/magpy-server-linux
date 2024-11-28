@@ -10,8 +10,12 @@ namespace MagpyServerLinux
 #if DEBUG
             LoggingManager.InitEarly();
 #endif
+
             try
             {
+                UpdateManager.Init();
+                Log.Debug("Updating setup finished.");
+
                 ArgsHandler argsHandler = new ArgsHandler(args);
 
                 Action action = argsHandler.GetAction();
@@ -23,8 +27,11 @@ namespace MagpyServerLinux
 
                 switch (action)
                 {
+                    case Action.NONE:
+                        Console.WriteLine("Wrong parameter.");
+                        return;
                     case Action.LAUNCH_WEBUI:
-                        if (!InstanceManager.IsInstanceHeld())
+                        if (!InstanceManager.IsInstanceRunning())
                         {
                             Console.WriteLine("App is stopped.");
                         }
@@ -35,7 +42,7 @@ namespace MagpyServerLinux
                         }
                         return;
                     case Action.STATUS:
-                        if (InstanceManager.IsInstanceHeld())
+                        if (InstanceManager.IsInstanceRunning())
                         {
                             Console.WriteLine("App is running.");
                         }
@@ -51,6 +58,51 @@ namespace MagpyServerLinux
                     case Action.DISPLAY_VERSION:
                         Console.WriteLine(AppName + " v" + version);
                         return;
+                    case Action.UPDATE:
+                        if (!UpdateManager.IsAppInstalled())
+                        {
+                            Console.WriteLine("App is not installed");
+                            return;
+                        }
+                        if (InstanceManager.IsInstanceRunning())
+                        {
+                            Console.WriteLine("App is running. Stopping app...");
+                            App.StopRunningInstance();
+                        }
+                        Console.WriteLine("Checking for updates");
+                        await UpdateManager.UpdateMyAppAndExit();
+                        return;
+                    case Action.CLEAR_DATA:
+                        if (InstanceManager.IsInstanceRunning())
+                        {
+                            Console.WriteLine("App is running. Stop app before clearing data.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Clearing magpy data.");
+                            PathManager.ClearAppDataFolder();
+                            Console.WriteLine("Data cleared.");
+                        }
+                        return;
+                    case Action.ENABLE_DESKTOP_AUTOSTART:
+                        if (!UpdateManager.IsAppInstalled())
+                        {
+                            Console.WriteLine("App is not installed");
+                            return;
+                        }
+                        string autostartFilePath = AutostartupManager.EnableDesktopAutoStart();
+                        Console.WriteLine($"Autostart enabled. Created file {autostartFilePath}");
+                        return;
+                    case Action.DISABLE_DESKTOP_AUTOSTART:
+                        if (!UpdateManager.IsAppInstalled())
+                        {
+                            Console.WriteLine("App is not installed");
+                            return;
+                        }
+                        AutostartupManager.DisableDesktopAutoStart();
+                        Console.WriteLine("Autostart disabled.");
+                        return;
+
                 }
 
                 bool instanceCreated = InstanceManager.HoldInstance();
@@ -75,7 +127,7 @@ namespace MagpyServerLinux
 
                 try
                 {
-                    await UpdateManager.UpdateMyApp();
+                    await UpdateManager.UpdateMyAppAndExit();
                 }
                 catch (Exception ex)
                 {

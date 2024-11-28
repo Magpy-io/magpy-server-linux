@@ -1,4 +1,4 @@
-﻿using Serilog;
+using Serilog;
 using Velopack;
 
 using static MagpyServerLinux.Utils;
@@ -21,7 +21,13 @@ namespace MagpyServerLinux
            .Run(LoggingManager.SerilogToMicrosoftLogger(LoggingManager.LoggerInstaller));
         }
 
-        public static async Task UpdateMyApp()
+        public static bool IsAppInstalled()
+        {
+            var mgr = new Velopack.UpdateManager(UPDATE_URL);
+
+            return mgr.IsInstalled;
+        }
+        public static async Task UpdateMyAppAndExit()
         {
             if (isUpdateRunning)
             {
@@ -40,6 +46,7 @@ namespace MagpyServerLinux
                 if (!mgr.IsInstalled)
                 {
                     Log.Debug("App is not installed.");
+                    Console.WriteLine("App is not installed.");
                     return; // app not installed
                 }
 
@@ -48,16 +55,20 @@ namespace MagpyServerLinux
                 if (newVersion == null)
                 {
                     Log.Debug("No new version.");
+                    Console.WriteLine("No available new versions.");
                     return; // no update available
                 }
 
                 Log.Debug("Downloading new version.");
+                Console.WriteLine($"New version found ({newVersion.TargetFullRelease.Version}). Downloading update...");
                 // download new version
                 await mgr.DownloadUpdatesAsync(newVersion);
 
                 Log.Debug("Restarting and applying new version.");
-                // install new version and restart app
-                mgr.ApplyUpdatesAndRestart(newVersion);
+                Console.WriteLine("Applying update...");
+
+                // install new version and stop app
+                mgr.ApplyUpdatesAndExit(newVersion);
             }
             finally
             {
@@ -74,7 +85,8 @@ namespace MagpyServerLinux
             {
                 try
                 {
-                    await UpdateMyApp();
+                    Console.WriteLine("Checking for app updates...");
+                    await UpdateMyAppAndExit();
                 }
                 catch (Exception ex)
                 {

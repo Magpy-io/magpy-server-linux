@@ -18,16 +18,26 @@ namespace MagpyServerLinux
 
       switch (args[0])
       {
+        case "--silent":
+          return Action.START;
         case "stop":
           return Action.STOP;
-        case "webui":
+        case "--open-webui":
           return Action.LAUNCH_WEBUI;
-        case "status":
+        case "--status":
           return Action.STATUS;
         case "--version":
           return Action.DISPLAY_VERSION;
+        case "update":
+          return Action.UPDATE;
+        case "--clear-data":
+          return Action.CLEAR_DATA;
+        case "--enable-autostart":
+          return Action.ENABLE_DESKTOP_AUTOSTART;
+        case "--disable-autostart":
+          return Action.DISABLE_DESKTOP_AUTOSTART;
       }
-      return Action.START;
+      return Action.NONE;
     }
 
     public bool IsLaunchSilent()
@@ -49,11 +59,16 @@ namespace MagpyServerLinux
 
   public enum Action
   {
+    NONE,
     START,
     STOP,
     LAUNCH_WEBUI,
     STATUS,
     DISPLAY_VERSION,
+    UPDATE,
+    CLEAR_DATA,
+    ENABLE_DESKTOP_AUTOSTART,
+    DISABLE_DESKTOP_AUTOSTART
   }
 }
 

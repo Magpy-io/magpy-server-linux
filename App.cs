@@ -6,11 +6,6 @@ namespace MagpyServerLinux
   {
     public static async Task Start(bool displayUI)
     {
-      UpdateManager.Init();
-      Log.Debug("Updating setup finished.");
-
-      UpdateManager.SetupPeriodicUpdate();
-
       AppDomain.CurrentDomain.ProcessExit += Program_Exited;
       SignalManager.SetupSignalWatchers();
 
@@ -29,6 +24,7 @@ namespace MagpyServerLinux
       NodeManager.StartNodeServer();
 
       Log.Debug("Node server started.");
+      Console.WriteLine("Server started.");
 
       await Task.Delay(500);
 
@@ -61,7 +57,7 @@ namespace MagpyServerLinux
 
     public static void StopRunningInstance()
     {
-      if (!InstanceManager.IsInstanceHeld())
+      if (!InstanceManager.IsInstanceRunning())
       {
         return;
       }
