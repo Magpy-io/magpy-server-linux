@@ -6,6 +6,7 @@ namespace MagpyServerLinux
     class InstanceManager
     {
         private const string LOCK_FILE_PATH = "/tmp/Magpy-e33aa2f2-3e0c-4f17-b25d-245e47fa92f3.lock";
+        private const string PID_FILE_PATH = "/tmp/Magpy-e33aa2f2-3e0c-4f17-b25d-245e47fa92f3.pid";
         private static FileStream? fs;
         public static bool HoldInstance()
         {
@@ -18,7 +19,9 @@ namespace MagpyServerLinux
             {
                 fs = new FileStream(LOCK_FILE_PATH, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
                 fs.Lock(0, 0);
-                StreamWriter writer = new StreamWriter(fs);
+
+                using FileStream fsPid = new FileStream(PID_FILE_PATH, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
+                using StreamWriter writer = new StreamWriter(fsPid);
                 writer.WriteLine(System.Diagnostics.Process.GetCurrentProcess().Id);
                 writer.Flush();
 
@@ -42,6 +45,49 @@ namespace MagpyServerLinux
                 {
                     File.Delete(LOCK_FILE_PATH);
                 }
+
+                if (File.Exists(PID_FILE_PATH))
+                {
+                    File.Delete(PID_FILE_PATH);
+                }
+            }
+        }
+
+        public static bool IsInstanceHeld()
+        {
+            try
+            {
+                if (!File.Exists(LOCK_FILE_PATH))
+                {
+                    return false;
+                }
+
+                fs = new FileStream(LOCK_FILE_PATH, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
+                fs.Close();
+                return false;
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+        }
+
+        public static int GetInstancePID()
+        {
+            if (!IsInstanceHeld())
+            {
+                return -1;
+            }
+
+            string pidFileContent = File.ReadAllText(PID_FILE_PATH);
+
+            if (int.TryParse(pidFileContent, out int existingPid))
+            {
+                return existingPid;
+            }
+            else
+            {
+                return -1;
             }
         }
 
