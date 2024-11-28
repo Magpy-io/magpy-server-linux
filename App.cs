@@ -4,7 +4,7 @@ namespace MagpyServerLinux
 {
   public class App
   {
-    public static async Task Start()
+    public static async Task Start(bool displayUI)
     {
       UpdateManager.Init();
       Log.Debug("Updating setup finished.");
@@ -12,7 +12,7 @@ namespace MagpyServerLinux
       UpdateManager.SetupPeriodicUpdate();
 
       AppDomain.CurrentDomain.ProcessExit += Program_Exited;
-      SignalWatcher.SetupSignalWatchers();
+      SignalManager.SetupSignalWatchers();
 
       Log.Debug("Looking for node executable.");
 
@@ -32,7 +32,10 @@ namespace MagpyServerLinux
 
       await Task.Delay(500);
 
-      ServerManager.OpenWebInterface();
+      if (displayUI)
+      {
+        ServerManager.OpenWebInterface();
+      }
 
       while (true)
       {
@@ -45,6 +48,21 @@ namespace MagpyServerLinux
       Log.Debug("Program closing, Killing node server.");
       NodeManager.KillNodeServer();
       InstanceManager.ReleaseInstance();
+    }
+
+    public static void StopRunningInstance()
+    {
+      if (!InstanceManager.IsInstanceHeld())
+      {
+        return;
+      }
+
+      int instancePid = InstanceManager.GetInstancePID();
+
+      if (SignalManager.IsProcessRunning(instancePid))
+      {
+        SignalManager.SendKillSignal(instancePid);
+      }
     }
   }
 
