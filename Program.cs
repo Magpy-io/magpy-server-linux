@@ -80,7 +80,7 @@ namespace MagpyServerLinux
 
                 try
                 {
-                    await UpdateManager.UpdateMyApp();
+                    await UpdateManager.UpdateMyAppAndExit();
                 }
                 catch (Exception ex)
                 {
