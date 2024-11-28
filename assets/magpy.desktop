@@ -1,0 +1,11 @@
+[Desktop Entry]
+Icon={0}
+Exec={1} --silent
+Version=1.0
+Type=Application
+Name=Magpy Server
+Terminal=false
+X-GNOME-Autostart-enabled=true
+StartupNotify=false
+X-GNOME-Autostart-Delay=10
+X-MATE-Autostart-Delay=10

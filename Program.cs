@@ -26,6 +26,9 @@ namespace MagpyServerLinux
 
                 switch (action)
                 {
+                    case Action.NONE:
+                        Console.WriteLine("Wrong parameter.");
+                        return;
                     case Action.LAUNCH_WEBUI:
                         if (!InstanceManager.IsInstanceRunning())
                         {
@@ -55,6 +58,11 @@ namespace MagpyServerLinux
                         Console.WriteLine(AppName + " v" + version);
                         return;
                     case Action.UPDATE:
+                        if (!UpdateManager.IsAppInstalled())
+                        {
+                            Console.WriteLine("App is not installed");
+                            return;
+                        }
                         if (InstanceManager.IsInstanceRunning())
                         {
                             Console.WriteLine("App is running. Stopping app...");
@@ -74,6 +82,24 @@ namespace MagpyServerLinux
                             PathManager.ClearAppDataFolder();
                             Console.WriteLine("Data cleared.");
                         }
+                        return;
+                    case Action.ENABLE_DESKTOP_AUTOSTART:
+                        if (!UpdateManager.IsAppInstalled())
+                        {
+                            Console.WriteLine("App is not installed");
+                            return;
+                        }
+                        string autostartFilePath = AutostartupManager.EnableDesktopAutoStart();
+                        Console.WriteLine($"Autostart enabled. Created file {autostartFilePath}");
+                        return;
+                    case Action.DISABLE_DESKTOP_AUTOSTART:
+                        if (!UpdateManager.IsAppInstalled())
+                        {
+                            Console.WriteLine("App is not installed");
+                            return;
+                        }
+                        AutostartupManager.DisableDesktopAutoStart();
+                        Console.WriteLine("Autostart disabled.");
                         return;
 
                 }
