@@ -1,4 +1,5 @@
 using Serilog;
+using static MagpyServerLinux.Constants;
 
 namespace MagpyServerLinux
 {
@@ -46,6 +47,9 @@ namespace MagpyServerLinux
                     case Action.STOP:
                         Console.WriteLine("stopping running instance.");
                         App.StopRunningInstance();
+                        return;
+                    case Action.DISPLAY_VERSION:
+                        Console.WriteLine(AppName + " v" + version);
                         return;
                 }
 
