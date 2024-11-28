@@ -26,6 +26,9 @@ namespace MagpyServerLinux
 
                 switch (action)
                 {
+                    case Action.NONE:
+                        Console.WriteLine("Wrong parameter.");
+                        return;
                     case Action.LAUNCH_WEBUI:
                         if (!InstanceManager.IsInstanceRunning())
                         {

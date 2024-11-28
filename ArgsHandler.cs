@@ -31,7 +31,7 @@ namespace MagpyServerLinux
         case "--clear-data":
           return Action.CLEAR_DATA;
       }
-      return Action.START;
+      return Action.NONE;
     }
 
     public bool IsLaunchSilent()
@@ -53,6 +53,7 @@ namespace MagpyServerLinux
 
   public enum Action
   {
+    NONE,
     START,
     STOP,
     LAUNCH_WEBUI,
