@@ -23,8 +23,15 @@ namespace MagpyServerLinux
                 switch (action)
                 {
                     case Action.LAUNCH_WEBUI:
-                        Console.WriteLine("Launching web browser");
-                        ServerManager.OpenWebInterface();
+                        if (!InstanceManager.IsInstanceHeld())
+                        {
+                            Console.WriteLine("App is stopped.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Launching web browser.");
+                            ServerManager.OpenWebInterface();
+                        }
                         return;
                     case Action.STATUS:
                         if (InstanceManager.IsInstanceHeld())
@@ -37,7 +44,7 @@ namespace MagpyServerLinux
                         }
                         return;
                     case Action.STOP:
-                        Console.WriteLine("stopping running instance");
+                        Console.WriteLine("stopping running instance.");
                         App.StopRunningInstance();
                         return;
                 }
