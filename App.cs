@@ -6,11 +6,6 @@ namespace MagpyServerLinux
   {
     public static async Task Start(bool displayUI)
     {
-      UpdateManager.Init();
-      Log.Debug("Updating setup finished.");
-
-      UpdateManager.SetupPeriodicUpdate();
-
       AppDomain.CurrentDomain.ProcessExit += Program_Exited;
       SignalManager.SetupSignalWatchers();
 
