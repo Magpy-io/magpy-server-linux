@@ -26,6 +26,8 @@ namespace MagpyServerLinux
           return Action.STATUS;
         case "--version":
           return Action.DISPLAY_VERSION;
+        case "update":
+          return Action.UPDATE;
       }
       return Action.START;
     }
@@ -54,6 +56,7 @@ namespace MagpyServerLinux
     LAUNCH_WEBUI,
     STATUS,
     DISPLAY_VERSION,
+    UPDATE
   }
 }
 

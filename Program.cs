@@ -55,6 +55,14 @@ namespace MagpyServerLinux
                         Console.WriteLine(AppName + " v" + version);
                         return;
                     case Action.UPDATE:
+                        if (InstanceManager.IsInstanceRunning())
+                        {
+                            Console.WriteLine("App is running. Stopping app...");
+                            App.StopRunningInstance();
+                        }
+                        Console.WriteLine("Checking for updates");
+                        await UpdateManager.UpdateMyAppAndExit();
+                        return;
 
                 }
 

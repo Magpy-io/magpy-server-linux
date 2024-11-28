@@ -93,7 +93,7 @@ namespace MagpyServerLinux
         private static void Child_Exited(object? sender, EventArgs e)
         {
             Log.Debug("Server node exited. Closing app.");
-            Console.WriteLine("Server stopped. Closing app.");
+            Console.WriteLine("Node server stopped. Closing app.");
             Environment.Exit(0);
         }
     }
