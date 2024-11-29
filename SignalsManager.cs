@@ -61,10 +61,12 @@ namespace MagpyServerLinux
       {
         case SIGINT:
           Log.Debug($"Signal SIGINT received. Shutting down app.");
+          NodeManager.KillNodeServer();
           Environment.Exit(0);
           break;
         case SIGTERM:
           Log.Debug($"Signal SIGTERM received. Shutting down app.");
+          NodeManager.KillNodeServer();
           Environment.Exit(0);
           break;
       }
