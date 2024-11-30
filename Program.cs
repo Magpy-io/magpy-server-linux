@@ -1,5 +1,7 @@
+using MagpyServerLinux.Commands;
+using MagpyServerLinux.Commands.Commands;
 using Serilog;
-using static MagpyServerLinux.Constants;
+
 
 namespace MagpyServerLinux
 {
@@ -16,148 +18,9 @@ namespace MagpyServerLinux
                 UpdateManager.Init();
                 Log.Debug("Updating setup finished.");
 
-                ArgsHandler argsHandler = new ArgsHandler(args);
+                ICommandExecutor command = ParseArgs(args);
 
-                Action action = argsHandler.GetAction();
-                bool isLaunchSilent = argsHandler.IsLaunchSilent();
-
-#if DEBUG
-                isLaunchSilent = true;
-#endif
-
-                switch (action)
-                {
-                    case Action.NONE:
-                        Console.WriteLine("Wrong parameter.");
-                        return;
-                    case Action.LAUNCH_WEBUI:
-                        if (!InstanceManager.IsInstanceRunning())
-                        {
-                            Console.WriteLine("App is stopped.");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Launching web browser.");
-                            ServerManager.OpenWebInterface();
-                        }
-                        return;
-                    case Action.STATUS:
-                        if (InstanceManager.IsInstanceRunning())
-                        {
-                            Console.WriteLine("App is running.");
-                        }
-                        else
-                        {
-                            Console.WriteLine("App is stopped.");
-                        }
-                        return;
-                    case Action.STOP:
-                        Console.WriteLine("stopping running instance.");
-                        App.StopRunningInstance();
-                        return;
-                    case Action.DISPLAY_VERSION:
-                        Console.WriteLine(AppName + " v" + version);
-                        return;
-                    case Action.UPDATE:
-                        if (!UpdateManager.IsAppInstalled())
-                        {
-                            Console.WriteLine("App is not installed");
-                            return;
-                        }
-                        if (InstanceManager.IsInstanceRunning())
-                        {
-                            Console.WriteLine("App is running. Stop app before updating server.");
-                            return;
-                        }
-                        Console.WriteLine("Checking for updates");
-                        await UpdateManager.UpdateMyAppAndExit();
-                        return;
-                    case Action.CLEAR_SERVER_DATA:
-                        if (InstanceManager.IsInstanceRunning())
-                        {
-                            Console.WriteLine("App is running. Stop app before clearing data.");
-                            return;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Are you sure you want to proceed?\nAll your server config and photos data will be lost. (y/n)\n(Actual photo files will not be deleted)");
-                            string? response = Console.ReadLine()?.Trim().ToLower();
-
-                            if (response == "y" || response == "yes")
-                            {
-                                Console.WriteLine("Clearing magpy server data.");
-                                string[] deleted = PathManager.ClearServerDataFolder();
-                                Array.ForEach(deleted, item => Console.WriteLine($"Deleted folder {item}"));
-
-
-                                Console.WriteLine("Data cleared.");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Operation cancelled by user.");
-                            }
-                        }
-                        return;
-                    case Action.CLEAR_ALL_DATA:
-                        if (InstanceManager.IsInstanceRunning())
-                        {
-                            Console.WriteLine("App is running. Stop app before clearing data.");
-                            return;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Are you sure you want to proceed?\nAll your server config and photos data will be lost. (y/n)\n(Actual photo files will not be deleted)");
-                            string? response = Console.ReadLine()?.Trim().ToLower();
-
-                            if (response == "y" || response == "yes")
-                            {
-                                Console.WriteLine("Clearing all magpy data.");
-                                string deleted = PathManager.ClearAppDataFolder();
-                                Console.WriteLine($"Deleted folder {deleted}");
-                                Console.WriteLine("Removing autostart desktop file.");
-                                AutostartupManager.DisableDesktopAutoStart();
-                                Console.WriteLine("All magpy data cleared.");
-                                Console.WriteLine("Autostart disabled.");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Operation cancelled by user.");
-                            }
-                        }
-                        return;
-                    case Action.ENABLE_DESKTOP_AUTOSTART:
-                        if (!UpdateManager.IsAppInstalled())
-                        {
-                            Console.WriteLine("App is not installed");
-                            return;
-                        }
-                        string autostartFilePath = AutostartupManager.EnableDesktopAutoStart();
-                        Console.WriteLine($"Autostart enabled. Created file {autostartFilePath}");
-                        return;
-                    case Action.DISABLE_DESKTOP_AUTOSTART:
-                        if (!UpdateManager.IsAppInstalled())
-                        {
-                            Console.WriteLine("App is not installed");
-                            return;
-                        }
-                        AutostartupManager.DisableDesktopAutoStart();
-                        Console.WriteLine("Autostart disabled.");
-                        return;
-
-                }
-
-                bool instanceCreated = InstanceManager.HoldInstance();
-                if (instanceCreated)
-                {
-                    LoggingManager.Init();
-                    Log.Debug("Logging initialized.");
-
-                    await App.Start(!isLaunchSilent);
-                }
-                else
-                {
-                    Console.WriteLine("Failed to run Magpy. An instance of the app is already running.");
-                }
+                await command.Run();
             }
             catch (Exception e)
             {
@@ -182,6 +45,59 @@ namespace MagpyServerLinux
             {
                 InstanceManager.ReleaseInstance();
             }
+        }
+
+        private static ICommandExecutor ParseArgs(string[] args)
+        {
+            ArgsHandler argsHandler = new ArgsHandler(args);
+
+            Action action = argsHandler.GetAction();
+            bool isLaunchSilent = argsHandler.IsLaunchSilent();
+
+#if DEBUG
+            isLaunchSilent = true;
+#endif
+
+            ICommandExecutor command;
+
+            switch (action)
+            {
+                case Action.START:
+                    command = new StartCommand(isLaunchSilent);
+                    break;
+                case Action.LAUNCH_WEBUI:
+                    command = new LaunchWebUICommand();
+                    break;
+                case Action.STATUS:
+                    command = new GetStatusCommand();
+                    break;
+                case Action.STOP:
+                    command = new StopCommand();
+                    break;
+                case Action.DISPLAY_VERSION:
+                    command = new VersionCommand();
+                    break;
+                case Action.UPDATE:
+                    command = new UpdateCommand();
+                    break;
+                case Action.CLEAR_SERVER_DATA:
+                    command = new ClearServerDataCommand();
+                    break;
+                case Action.CLEAR_ALL_DATA:
+                    command = new ClearAllDataCommand();
+                    break;
+                case Action.ENABLE_DESKTOP_AUTOSTART:
+                    command = new EnableAutostartCommand();
+                    break;
+                case Action.DISABLE_DESKTOP_AUTOSTART:
+                    command = new DisableAutostartCommand();
+                    break;
+                default:
+                    command = new UndefinedCommand();
+                    break;
+            }
+
+            return command;
         }
     }
 }
