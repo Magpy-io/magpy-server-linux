@@ -36,9 +36,6 @@ namespace MagpyServerLinux
                 {
                     Log.Debug(ex, "Error while trying to update server.");
                 }
-#if DEBUG
-                Console.ReadKey();
-#endif
             }
             finally
             {
