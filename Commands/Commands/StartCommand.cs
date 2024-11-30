@@ -12,16 +12,15 @@ public class StartCommand : ICommandExecutor
   public async Task Run()
   {
     bool instanceCreated = InstanceManager.HoldInstance();
-    if (instanceCreated)
-    {
-      LoggingManager.Init();
-      Log.Debug("Logging initialized.");
-
-      await App.Start(!isLaunchSilent);
-    }
-    else
+    if (!instanceCreated)
     {
       Console.WriteLine("Failed to run Magpy. An instance of the app is already running.");
+      return;
     }
+
+    LoggingManager.Init();
+    Log.Debug("Logging initialized.");
+
+    await App.Start(!isLaunchSilent);
   }
 }

@@ -2,7 +2,6 @@ using MagpyServerLinux.Commands;
 using MagpyServerLinux.Commands.Commands;
 using Serilog;
 
-
 namespace MagpyServerLinux
 {
     public class Program

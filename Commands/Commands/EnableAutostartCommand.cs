@@ -9,13 +9,12 @@ public class EnableAutostartCommand : ICommandExecutor
     if (!UpdateManager.IsAppInstalled())
     {
       Console.WriteLine("App is not installed");
+      return Task.CompletedTask;
     }
-    else
-    {
 
-      string autostartFilePath = AutostartupManager.EnableDesktopAutoStart();
-      Console.WriteLine($"Autostart enabled. Created file {autostartFilePath}");
-    }
+    string autostartFilePath = AutostartupManager.EnableDesktopAutoStart();
+    Console.WriteLine($"Autostart enabled. Created file {autostartFilePath}");
+
     return Task.CompletedTask;
   }
 }

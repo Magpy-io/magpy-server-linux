@@ -9,12 +9,12 @@ public class LaunchWebUICommand : ICommandExecutor
     if (!InstanceManager.IsInstanceRunning())
     {
       Console.WriteLine("App is stopped.");
+      return Task.CompletedTask;
     }
-    else
-    {
-      Console.WriteLine("Launching web browser.");
-      ServerManager.OpenWebInterface();
-    }
+
+    Console.WriteLine("Launching web browser.");
+    ServerManager.OpenWebInterface();
+
     return Task.CompletedTask;
   }
 }
