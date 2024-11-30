@@ -85,6 +85,22 @@ namespace MagpyServerLinux
                             Console.WriteLine("Data cleared.");
                         }
                         return;
+                    case Action.CLEAR_ALL_DATA:
+                        if (InstanceManager.IsInstanceRunning())
+                        {
+                            Console.WriteLine("App is running. Stop app before clearing data.");
+                            return;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Clearing all magpy data.");
+                            PathManager.ClearAppDataFolder();
+                            Console.WriteLine("Removing autostart desktop file.");
+                            AutostartupManager.DisableDesktopAutoStart();
+                            Console.WriteLine("All magpy data cleared.");
+                            Console.WriteLine("Autostart disabled.");
+                        }
+                        return;
                     case Action.ENABLE_DESKTOP_AUTOSTART:
                         if (!UpdateManager.IsAppInstalled())
                         {
