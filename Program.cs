@@ -80,9 +80,22 @@ namespace MagpyServerLinux
                         }
                         else
                         {
-                            Console.WriteLine("Clearing magpy server data.");
-                            PathManager.ClearServerDataFolder();
-                            Console.WriteLine("Data cleared.");
+                            Console.WriteLine("Are you sure you want to proceed?\nAll your server config and photos data will be lost. (y/n)\n(Actual photo files will not be deleted)");
+                            string? response = Console.ReadLine()?.Trim().ToLower();
+
+                            if (response == "y" || response == "yes")
+                            {
+                                Console.WriteLine("Clearing magpy server data.");
+                                string[] deleted = PathManager.ClearServerDataFolder();
+                                Array.ForEach(deleted, item => Console.WriteLine($"Deleted folder {item}"));
+
+
+                                Console.WriteLine("Data cleared.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Operation cancelled by user.");
+                            }
                         }
                         return;
                     case Action.CLEAR_ALL_DATA:
@@ -93,12 +106,23 @@ namespace MagpyServerLinux
                         }
                         else
                         {
-                            Console.WriteLine("Clearing all magpy data.");
-                            PathManager.ClearAppDataFolder();
-                            Console.WriteLine("Removing autostart desktop file.");
-                            AutostartupManager.DisableDesktopAutoStart();
-                            Console.WriteLine("All magpy data cleared.");
-                            Console.WriteLine("Autostart disabled.");
+                            Console.WriteLine("Are you sure you want to proceed?\nAll your server config and photos data will be lost. (y/n)\n(Actual photo files will not be deleted)");
+                            string? response = Console.ReadLine()?.Trim().ToLower();
+
+                            if (response == "y" || response == "yes")
+                            {
+                                Console.WriteLine("Clearing all magpy data.");
+                                string deleted = PathManager.ClearAppDataFolder();
+                                Console.WriteLine($"Deleted folder {deleted}");
+                                Console.WriteLine("Removing autostart desktop file.");
+                                AutostartupManager.DisableDesktopAutoStart();
+                                Console.WriteLine("All magpy data cleared.");
+                                Console.WriteLine("Autostart disabled.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Operation cancelled by user.");
+                            }
                         }
                         return;
                     case Action.ENABLE_DESKTOP_AUTOSTART:

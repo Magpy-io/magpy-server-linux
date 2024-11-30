@@ -32,15 +32,16 @@ namespace MagpyServerLinux
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), APPDATA_MAGPY_FOLDER_NAME);
         }
 
-        public static void ClearAppDataFolder()
+        public static string ClearAppDataFolder()
         {
             if (Directory.Exists(AppDataPath()))
             {
                 Directory.Delete(AppDataPath(), recursive: true);
             }
+            return AppDataPath();
         }
 
-        public static void ClearServerDataFolder()
+        public static string[] ClearServerDataFolder()
         {
             string dbFolderPath = RelativeAppDataToAbsolute(DB_FOLDER_NAME);
             string serverDataFolderPath = RelativeAppDataToAbsolute(SERVER_DATA_FOLDER_NAME);
@@ -60,6 +61,8 @@ namespace MagpyServerLinux
             {
                 Directory.Delete(logsFolderPath, recursive: true);
             }
+
+            return [dbFolderPath, serverDataFolderPath, logsFolderPath];
         }
 
         public static string? GetAppImagePath()
