@@ -42,7 +42,7 @@ namespace MagpyServerLinux
         {
             return new LoggerConfiguration()
                .MinimumLevel.Verbose()
-               .WriteTo.File(PathManager.RelativeAppDataToAbsolute(Path.Combine("LogFiles", channel, "Log.txt")),
+               .WriteTo.File(PathManager.RelativeAppDataToAbsolute(Path.Combine(PathManager.LOGS_FOLDER_NAME, channel, "Log.txt")),
                    rollingInterval: RollingInterval.Day,
                    retainedFileTimeLimit: TimeSpan.FromDays(5),
                    outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff}] [{Level}] {Message}{NewLine}{Exception}")
@@ -61,7 +61,7 @@ namespace MagpyServerLinux
         {
             return new LoggerConfiguration()
                .MinimumLevel.Verbose()
-               .WriteTo.File(PathManager.RelativeAppDataToAbsolute(Path.Combine("LogFiles", channel, "Log.txt")),
+               .WriteTo.File(PathManager.RelativeAppDataToAbsolute(Path.Combine(PathManager.LOGS_FOLDER_NAME, channel, "Log.txt")),
                    rollingInterval: RollingInterval.Day,
                    retainedFileTimeLimit: TimeSpan.FromDays(7),
                    outputTemplate: "{Message}{NewLine}")

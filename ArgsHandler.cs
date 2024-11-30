@@ -30,8 +30,10 @@ namespace MagpyServerLinux
           return Action.DISPLAY_VERSION;
         case "update":
           return Action.UPDATE;
-        case "--clear-data":
-          return Action.CLEAR_DATA;
+        case "--clear-server-data":
+          return Action.CLEAR_SERVER_DATA;
+        case "--clear-all-data":
+          return Action.CLEAR_ALL_DATA;
         case "--enable-autostart":
           return Action.ENABLE_DESKTOP_AUTOSTART;
         case "--disable-autostart":
@@ -66,7 +68,8 @@ namespace MagpyServerLinux
     STATUS,
     DISPLAY_VERSION,
     UPDATE,
-    CLEAR_DATA,
+    CLEAR_SERVER_DATA,
+    CLEAR_ALL_DATA,
     ENABLE_DESKTOP_AUTOSTART,
     DISABLE_DESKTOP_AUTOSTART
   }
